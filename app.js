@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const expressLayouts = require('express-ejs-layouts');
+const ejsMate = require("ejs-mate");
 
 // Connect to Database
 const MONGO_URL = "mongodb://127.0.0.1:27017/resultwave";
@@ -23,7 +23,8 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(expressLayouts);
+app.engine("ejs", ejsMate);
+
 
 // Routes
 app.get("/", (req, res) => {
