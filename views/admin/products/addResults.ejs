@@ -1,0 +1,134 @@
+<% layout('admin/layouts/adminBoilerplate'); %>
+
+    <div class="container">
+        <h1>Add New Result</h1>
+        <form action="/admin/results" method="POST">
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <select name="year" id="year" required>
+                    <option value="">Select Year</option>
+                    <option value="2081">2081</option>
+                    <option value="2082">2082</option>
+                    <option value="2083">2083</option>
+                    <option value="2084">2084</option>
+                    <option value="2085">2085</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="level">Level:</label>
+                <select name="level" id="level" required>
+                    <option value="">Select Level</option>
+                    <option value="Pre-Diploma">Pre-Diploma</option>
+                    <option value="Diploma/PCL">Diploma/PCL</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="symbolNumber">Symbol Number:</label>
+                <input type="text" name="symbolNumber" id="symbolNumber" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" id="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="semester">Semester:</label>
+                <select name="semester" id="semester" required onchange="checkSemester()">
+                    <option value="">Select Semester</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                    <option value="5">Semester 5</option>
+                    <option value="6">Semester 6</option>
+                </select>
+            </div>
+
+            <div id="subjects">
+                <h3>Subjects</h3>
+            </div>
+
+            <div id="electives">
+                <h3>Electives</h3>
+            </div>
+
+            <button type="submit" class="btn-submit">Add Result</button>
+        </form>
+    </div>
+
+    <script>
+        const subjects = <%- JSON.stringify(subjects) %>;
+        console.log('Loaded subjects:', subjects);
+
+        function checkSemester() {
+            const semester = document.getElementById('semester').value;
+            const subjectsDiv = document.getElementById('subjects');
+            const electivesDiv = document.getElementById('electives');
+
+            // Clear previous content
+            subjectsDiv.innerHTML = '<h3>Subjects</h3>';
+            electivesDiv.innerHTML = '<h3>Electives</h3>';
+
+            // Filter subjects for selected semester
+            const filteredSubjects = subjects.filter(subject => subject.semester === semester);
+            console.log('Filtered subjects:', filteredSubjects);
+
+            // Create subject input fields
+            filteredSubjects.forEach((subject, index) => {
+                const subjectDiv = document.createElement('div');
+                subjectDiv.classList.add('subject-group');
+                subjectDiv.innerHTML = `
+                <div class="subject-name">
+                    <label for="subjectName${index}">Subject Name:</label>
+                    <input type="text" id="subjectName${index}" name="subjects[${index}][name]" value="${subject.name}" readonly>
+                </div>
+                <div class="marks-group">
+                    <div>
+                        <label for="internalMarks${index}">Internal Marks:</label>
+                        <input type="number" id="internalMarks${index}" name="subjects[${index}][internalMarks]" min="0" max="20" required>
+                    </div>
+                    <div>
+                        <label for="externalMarks${index}">External Marks:</label>
+                        <input type="number" id="externalMarks${index}" name="subjects[${index}][externalMarks]" min="0" max="80" required>
+                    </div>
+                </div>
+            `;
+                subjectsDiv.appendChild(subjectDiv);
+            });
+
+            // Handle electives for semester 5 and 6
+            if (semester === '5' || semester === '6') {
+                const electiveName = semester === '5' ? 'Elective-I' : 'Elective-II';
+                const electiveSubjects = subjects.filter(subject =>
+                    subject.semester === semester && subject.isElective);
+
+                if (electiveSubjects.length > 0) {
+                    const electiveDiv = document.createElement('div');
+                    electiveDiv.classList.add('elective-group');
+                    electiveDiv.innerHTML = `
+                    <h4>${electiveName}</h4>
+                    <select name="${electiveName.toLowerCase()}" required>
+                        <option value="">Select ${electiveName}</option>
+                        ${electiveSubjects.map(subject => `
+                            <option value="${subject._id}">${subject.name}</option>
+                        `).join('')}
+                    </select>
+                    <div class="marks-group">
+                        <div>
+                            <label for="${electiveName}Internal">Internal Marks:</label>
+                            <input type="number" id="${electiveName}Internal"  name="${electiveName.toLowerCase()}[internalMarks]" min="0" max="20" required>
+                        </div>
+                        <div>
+                            <label for="${electiveName}External">External Marks:</label>
+                            <input type="number" id="${electiveName}External" name="${electiveName.toLowerCase()}[externalMarks]" min="0" max="80" required>
+                        </div>
+                    </div>
+                `;
+                    electivesDiv.appendChild(electiveDiv);
+                }
+            }
+        }
+    </script>

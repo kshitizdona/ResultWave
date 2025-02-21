@@ -1,3 +1,44 @@
 <% layout('layouts/boilerplate'); %>
 
-<h1>Products</h1>
+<div class="resultCheck">
+    <div class="title">
+        <h3>Yearly/Semester Check Results</h3>
+    </div>
+
+    <form action="" method="POST">
+        <div class="year">
+            <label for="year">Examination Year: </label>
+            <select name="year" id="year">
+                <option>-- Select --</option>
+                <option value="1">2081</option>
+                <option value="2">2080</option>
+                <option value="3">2079</option>
+                <option value="4">2078</option>
+                <option value="5">2077</option>
+            </select>
+        </div>
+
+        <div class="level">
+            <label for="level">Level: </label>
+            <select name="level" id="level">
+                <option>-- Select --</option>
+                <option value="1">Pre-Diploma</option>
+                <option value="2">Diploma/PCL</option>
+            </select>
+        </div>
+
+        <div class="symbolNumber">
+            <label for="symbolNumber">Symbol Number: </label>
+            <input type="text" name="symbolNumber" id="symbolNumber" placeholder="e.g. 1000234" required>
+        </div>
+
+        <div class="dob">
+            <label for="dob">Date Of Birth (B.S.): </label>
+            <input type="text" name="dob" id="dob" placeholder="Date Format: YYYY-MM-DD" required>
+        </div>
+
+        <div class="searchBtn">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+</div>
