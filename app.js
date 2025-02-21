@@ -70,7 +70,12 @@ app.get("/admin/add-results", async (req, res) => {
     }
 });
 
-
+app.post("/admin/add-results", async (req, res) => {
+    const { year, level, symbolNumber, dob, semester, subjects, electiveI, electiveII } = req.body;
+    const result = new Result({ year, level, symbolNumber, dob, semester, subjects, electiveI, electiveII });
+    await result.save();
+    res.redirect("/admin/add-results");
+});
 
 // // Admin route
 // app.get("/admin", (req, res) => {

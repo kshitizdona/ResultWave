@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.resultCheck {
+    width: 50%;
+    margin: 50px auto;
+    border: 1px solid gray;
+    border-radius: .3rem;
+}
+
+.title {
+    background-color: #144f82;
+    color: white;
+    padding: .4rem;
+}
+
+.year, .level, .symbolNumber, .dob {
+    padding: .5rem;
+    margin: 1rem;
+}
+
+.searchBtn {
+    padding: .5rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.searchBtn button {
+    padding: .5rem 1rem;
+    background-color: #144f82;
+    color: white;
+    border: none;
+    border-radius: .3rem;
+    cursor: pointer;
+}
+
+#year {
+    padding: .3rem .5rem;
+    width: 23%;
+    border-radius: .3rem;
+    outline: none;
+    margin-left: 3rem;
+}
+
+#level {
+    padding: .3rem .5rem;
+    width: 23%;
+    border-radius: .3rem;
+    outline: none;
+    margin-left: 9.2rem;
+}
+
+.symbolNumber input {
+    padding: .3rem .5rem;
+    border-radius: .3rem;
+    outline: none;
+    width: 30%;
+    margin-left: 3.5rem;
+    border: 1px solid black;
+}
+
+.dob input {
+    padding: .3rem .5rem;
+    border-radius: .3rem;
+    outline: none;
+    width: 30%;
+    margin-left: 2.5rem;
+    border: 1px solid black;
+}
